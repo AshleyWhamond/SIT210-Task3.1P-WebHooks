@@ -21,21 +21,24 @@ void setup()
 // loop() runs over and over again, as quickly as it can execute.
 void loop()
 {
-  delay(5000);
+  delay(30000);
 
   // Read Humidity
   float h = dht.getHumidity();
   // Read temperature as Celsius
   float t = dht.getTempCelcius();
-  
+
 
   // Check if any reads failed
   if (isnan(h) || isnan(t))
   {
     Particle.publish("Failed to read from DHT11 sensor!");
+    Particle.publish("Hum Error", String (h));
+    Particle.publish("Temp Error", String (t));
+    
     return;
   }
 
-  Particle.publish("Humidity:", String(h));
-  Particle.publish("Temp:", String(t));
+  Particle.publish("Humidity:", String(h), PRIVATE);
+  Particle.publish("Temp:", String(t), PRIVATE);
 }
